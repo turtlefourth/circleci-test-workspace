@@ -2,7 +2,7 @@ version: 2.1
 variables:
   working-directory-default: &working-directory-default
     working_directory: /tmp/front-office
-  working_directory-warehouse: &working-directory-warehouse
+  working-directory-warehouse: &working-directory-warehouse
     working_directory: /tmp/front-office-warehouse
   attach-workspace-default: &attach-workspace-default
     at: /tmp/front-office
