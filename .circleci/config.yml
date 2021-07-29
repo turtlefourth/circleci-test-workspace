@@ -29,11 +29,6 @@ jobs:
             - ~/.npm
             - node_modules
 
-      # Audit
-      - run:
-          name: Node Packages Audit
-          command: npm run ci:audit
-
       # save the node_module folder to be reusable in the other jobs
       - persist_to_workspace:
           root: .
