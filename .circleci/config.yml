@@ -112,6 +112,6 @@ workflows:
   build-and-deploy-front-office:
     jobs:
       <<: *build-and-deploy-front-office
-  build-and-deploy-front-warehouse:
+  build-and-deploy-warehouse:
     jobs:
-      <<: *build-and-deploy-front-warehouse
+      <<: *build-and-deploy-warehouse
