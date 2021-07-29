@@ -35,6 +35,10 @@ jobs:
           paths:
             - node_modules
 
+  build-warehouse:
+    <<: *build
+    working_directory: /tmp/front-office-warehouse
+
   deploy:
     <<: *defaults
     steps:
@@ -49,6 +53,22 @@ jobs:
           command: |
             echo "deploying branch ${CIRCLE_BRANCH}"
             DEPLOY_BRANCH=$CIRCLE_BRANCH npm run deploy
+
+  deploy-warehouse:
+    <<: *deploy
+    steps:
+      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/front-office-warehouse
+
+      # Deploy to Firebase
+      - deploy:
+          name: Deploy branch to matching firebase app
+          command: |
+            echo "deploying branch ${CIRCLE_BRANCH}"
+            DEPLOY_BRANCH=$CIRCLE_BRANCH npm run deploy
+
 
 workflows:
   version: 2
@@ -68,3 +88,16 @@ workflows:
                 - demo
                 - production
                 - /qa[\d]+/
+      - build-warehouse:
+          filters:
+            tags:
+              only: /.*/
+      - deploy-warehouse:
+          requires:
+            - build-warehouse
+          filters:
+            branches:
+              only:
+                - master
+                - demo
+                - production
