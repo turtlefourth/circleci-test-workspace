@@ -1,9 +1,13 @@
 version: 2.1
 variables:
   working-directory-default: &working-directory-default
-    /tmp/front-office
+    working_directory: /tmp/front-office
   working_directory-warehouse: &working-directory-warehouse
-    /tmp/front-office-warehouse
+    working_directory: /tmp/front-office-warehouse
+  attach-workspace-default: &attach-workspace-default
+    at: /tmp/front-office
+  attach-workspace-warehouse: &attach-workspace-warehouse
+    at: /tmp/front-office-warehouse
 
   default-variables: &default-variables
     docker:
@@ -88,8 +92,7 @@ jobs:
       - checkout
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at:
-            <<: *working-directory-warehouse
+          <<: *attach-workspace-default
 
       # Deploy to Firebase
       - deploy:
@@ -106,8 +109,7 @@ jobs:
       - checkout
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at:
-            <<: *working-directory-warehouse
+          <<: *attach-workspace-warehouse
 
       # Deploy to Firebase
       - deploy:
