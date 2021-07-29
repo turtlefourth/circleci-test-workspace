@@ -82,7 +82,7 @@ workflows:
               only: /.*/
       - deploy-front-office:
           requires:
-            - build
+            - build-front-office
           filters:
             branches:
               only:
