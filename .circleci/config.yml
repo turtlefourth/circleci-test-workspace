@@ -41,7 +41,7 @@ jobs:
     <<: *build
     working_directory: /tmp/front-office-warehouse
 
-  deploy:
+  deploy-front-office:
     <<: *defaults
     steps:
       - checkout
@@ -76,11 +76,11 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - build:
+      - build-front-office:
           filters:
             tags:
               only: /.*/
-      - deploy:
+      - deploy-front-office:
           requires:
             - build
           filters:
