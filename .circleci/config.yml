@@ -58,6 +58,7 @@ jobs:
 
   deploy-warehouse:
     <<: *defaults
+    working_directory: /tmp/front-office-warehouse
     steps:
       - checkout
       - attach_workspace:
