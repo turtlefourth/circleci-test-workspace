@@ -116,23 +116,23 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      build-default:
+      - build-default:
         <<: *build-filters-default
-      deploy-default:
+      - deploy-default:
         <<: *deploy-filters-default
-      build-warehouse:
+      - build-warehouse:
         <<: *build-filters-warehouse
-      deploy-warehouse:
+      - deploy-warehouse:
         <<: *deploy-filters-warehouse
   build-and-deploy-default:
     jobs:
-      build-default:
+      - build-default:
         <<: *build-filters-default
-      deploy-default:
+      - deploy-default:
         <<: *deploy-filters-default
   build-and-deploy-warehouse:
     jobs:
-      build-warehouse:
+      - build-warehouse:
         <<: *build-filters-warehouse
-      deploy-warehouse:
+      - deploy-warehouse:
         <<: *deploy-filters-warehouse
