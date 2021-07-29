@@ -29,11 +29,6 @@ jobs:
             - ~/.npm
             - node_modules
 
-      # Linter
-      - run:
-          name: Vue and TS Linter
-          command: npm run lint
-
       # Audit
       - run:
           name: Node Packages Audit
