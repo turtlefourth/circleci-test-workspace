@@ -77,17 +77,13 @@ variables:
 
 jobs:
   build-default:
-    <<: *build-default
-    working_directory:
-      <<: *working-directory-default
+    <<: [*build-default, *working-directory-default]
 
   build-warehouse:
-    <<: *build-default
-    working_directory:
-      <<: *working-directory-warehouse
+    <<: [*build-default, *working-directory-warehouse]
 
   deploy-default:
-    <<: *default-variables
+    <<: [*default-variables, *working-directory-default]
     steps:
       - checkout
       - attach_workspace:
@@ -102,9 +98,7 @@ jobs:
             DEPLOY_BRANCH=$CIRCLE_BRANCH npm run deploy
 
   deploy-warehouse:
-    <<: *default-variables
-    working_directory:
-      <<: *working-directory-warehouse
+    <<: [*default-variables, *working-directory-warehouse]
     steps:
       - checkout
       - attach_workspace:
