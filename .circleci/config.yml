@@ -5,7 +5,7 @@ variables:
   working_directory-warehouse: &working-directory-warehouse
     /tmp/front-office-warehouse
 
-  default-variables: &defaults-variables
+  default-variables: &default-variables
     docker:
       - image: circleci/node:14.15.3
     parallelism: 1
