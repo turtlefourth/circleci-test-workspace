@@ -1,11 +1,23 @@
 version: 2.1
+parameters:
+  run-workflow-default:
+    default: true
+    type: boolean
+
+  run-workflow-warehouse:
+    default: true
+    type: boolean
+
 variables:
   working-directory-default: &working-directory-default
     working_directory: /tmp/front-office
+
   working-directory-warehouse: &working-directory-warehouse
     working_directory: /tmp/front-office-warehouse
+
   attach-workspace-default: &attach-workspace-default
     at: /tmp/front-office
+
   attach-workspace-warehouse: &attach-workspace-warehouse
     at: /tmp/front-office-warehouse
 
@@ -41,35 +53,6 @@ variables:
           root: .
           paths:
             - node_modules
-
-  build-filters-default: &build-filters-default
-    filters:
-      tags:
-        only: /.*/
-  build-filters-warehouse: &build-filters-warehouse
-    filters:
-      tags:
-        only: /.*/
-      branches:
-        only:
-          - master
-          - demo
-          - production
-  deploy-filters-default: &deploy-filters-default
-    filters:
-      branches:
-        only:
-          - master
-          - demo
-          - production
-          - /qa[\d]+/
-  deploy-filters-warehouse: &deploy-filters-warehouse
-    filters:
-      branches:
-        only:
-          - master
-          - demo
-          - production
 
 jobs:
   build-default:
@@ -110,33 +93,41 @@ jobs:
 
 workflows:
   version: 2
-  build-and-deploy:
-    jobs:
-      - build-default:
-          <<: *build-filters-default
-      - deploy-default:
-          <<: *deploy-filters-default
-          requires:
-            - build-default
-      - build-warehouse:
-          <<: *build-filters-warehouse
-      - deploy-warehouse:
-          <<: *deploy-filters-warehouse
-          requires:
-            - build-warehouse
   build-and-deploy-default:
+    when: << pipeline.parameters.run-workflow-default >>
     jobs:
       - build-default:
-          <<: *build-filters-default
+          filters:
+            tags:
+              only: /.*/
       - deploy-default:
-          <<: *deploy-filters-default
           requires:
             - build-default
+          filters:
+            branches:
+              only:
+                - master
+                - demo
+                - production
+                - /qa[\d]+/
   build-and-deploy-warehouse:
+    when: << pipeline.parameters.run-workflow-warehouse >>
     jobs:
       - build-warehouse:
-          <<: *build-filters-warehouse
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only:
+                - master
+                - demo
+                - production
       - deploy-warehouse:
-          <<: *deploy-filters-warehouse
           requires:
             - build-warehouse
+          filters:
+            branches:
+              only:
+                - master
+                - demo
+                - production
