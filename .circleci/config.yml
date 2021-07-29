@@ -50,11 +50,6 @@ variables:
     filters:
       tags:
         only: /.*/
-      branches:
-        only:
-          - master
-          - demo
-          - production
   deploy-filters-default: &deploy-filters-default
     requires:
       - build-default
