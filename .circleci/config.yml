@@ -64,8 +64,6 @@ variables:
           - production
           - /qa[\d]+/
   deploy-filters-warehouse: &deploy-filters-warehouse
-    requires:
-      - build-warehouse
     filters:
       branches:
         only:
