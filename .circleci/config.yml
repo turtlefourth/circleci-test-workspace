@@ -85,37 +85,37 @@ jobs:
 
 workflows:
   version: 2
+  build-and-deploy:
     jobs:
-      build-and-deploy:
-        - build-default:
-            filters:
-              tags:
-                only: /.*/
-        - deploy-default:
-            requires:
-              - build-default
-            filters:
-              branches:
-                only:
-                  - master
-                  - demo
-                  - production
-                  - /qa[\d]+/
-        - build-warehouse:
-            filters:
-              tags:
-                only: /.*/
-              branches:
-                only:
-                  - master
-                  - demo
-                  - production
-        - deploy-warehouse:
-            requires:
-              - build-warehouse
-            filters:
-              branches:
-                only:
-                  - master
-                  - demo
-                  - production
+      - build-default:
+          filters:
+            tags:
+              only: /.*/
+      - deploy-default:
+          requires:
+            - build-default
+          filters:
+            branches:
+              only:
+                - master
+                - demo
+                - production
+                - /qa[\d]+/
+      - build-warehouse:
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              only:
+                - master
+                - demo
+                - production
+      - deploy-warehouse:
+          requires:
+            - build-warehouse
+          filters:
+            branches:
+              only:
+                - master
+                - demo
+                - production
